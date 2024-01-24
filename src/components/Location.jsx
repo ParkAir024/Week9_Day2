@@ -29,8 +29,6 @@ export default function Location() {
         const randomIndex = Math.floor(Math.random() * locations.length);
         const newLocation = locations[randomIndex];
 
-        const updatedLocations = [...locations.slice(0, randomIndex), ...locations.slice(randomIndex + 1)];
-
         setNextLocation(newLocation);
     }
 
@@ -38,6 +36,10 @@ export default function Location() {
         if (nextLocation) {
             setSelectedLocations(prevLocations => [...prevLocations, nextLocation]);
         }
+    }
+
+    function removeSelectedLocation(index) {
+        setSelectedLocations(prevLocations => prevLocations.filter((_, i) => i !== index));
     }
 
     return (
@@ -50,7 +52,9 @@ export default function Location() {
                 <h4>Selected Locations:</h4>
                 <ul>
                     {selectedLocations.map((location, index) => (
-                        <li key={index}>{location}</li>
+                        <li key={index} onClick={() => removeSelectedLocation(index)} style={{ cursor: 'pointer' }}>
+                            {location}
+                        </li>
                     ))}
                 </ul>
             </div>
